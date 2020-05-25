@@ -1,5 +1,5 @@
 ## ug-news-data
-Python scripts for collecting Ugandan news using web scraping
+Python scripts for collecting Ugandan news using web scraping techniques
 
 #### Project Setup
 * Clone the project using this link https://github.com/NLSanyu/ug-news-data.git
