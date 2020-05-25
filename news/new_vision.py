@@ -11,12 +11,14 @@ class NewVision(News):
         super().__init__(url, article_href)
 
     def clean_article_text(self, paragraphs):
-        del paragraphs[0:2]
-        del paragraphs[-7:]
+        # del paragraphs[0:2]
+        # del paragraphs[-7:]
         cleaned_text = []
-        for p in paragraphs:
-            p_text = p.get_text().strip()
-            cleaned_text.append(p_text)
+        # for p in paragraphs:
+        #     p_text = p.get_text().strip()
+        #     cleaned_text.append(p_text)
+        p_text = paragraphs.strip()
+        cleaned_text.append(p_text)
         return " ".join(cleaned_text)
 
     def fetch_news(self):
@@ -40,10 +42,15 @@ class NewVision(News):
                 article = requests.get(self.url + link['href'])
                 article_content = article.content
                 soup2 = BeautifulSoup(article_content, 'html5lib')
-                title = soup2.find('h1').get_text()
-                slug = "-".join(title.split())
-                paragraphs = soup2.find_all('p', recursive=True)
-                cleaned_article = self.clean_article_text(paragraphs)
-                all_articles.append({'slug': slug, 'text': cleaned_article})
+                soup3 = soup2.find('div', class_='container_left')
+                if soup3:
+                    title = soup3.find('h1').get_text()
+                    print(title)
+                    slug = "-".join(title.split())
+                    soup4 = soup3.find('div', class_='article-content')
+                    paragraphs = soup4.get_text()
+                    cleaned_article = self.clean_article_text(paragraphs)
+                    all_articles.append({'slug': slug, 'text': cleaned_article})
+                    all_articles.append({'slug': slug, 'text': paragraphs})
 
         return all_articles
