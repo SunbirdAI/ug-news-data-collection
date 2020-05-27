@@ -7,10 +7,10 @@ from news.daily_monitor import DailyMonitor
 # news_col = news_db["news"]
 # news_db.news.create_index([('slug', pymongo.ASCENDING)], unique=True)
 
-# new_vision = NewVision()
+new_vision = NewVision()
 daily_monitor = DailyMonitor()
 
-# print(new_vision.fetch_news())
+print(new_vision.fetch_news())
 print(daily_monitor.fetch_news())
 
 # news_col.insert_many(nv_news_data)

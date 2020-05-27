@@ -11,8 +11,6 @@ class NewVision(News):
         super().__init__(url, article_href)
 
     def clean_article_text(self, paragraphs):
-        # del paragraphs[0:2]
-        # del paragraphs[-7:]
         cleaned_text = []
         for p in paragraphs:
             p_text = p.get_text().strip()
@@ -28,9 +26,6 @@ class NewVision(News):
         soup1 = BeautifulSoup(coverpage, 'html5lib')
 
         # Pick out the divs that hold links to news articles
-        # divs1 = soup1.find_all('div')
-        # divs2 = divs1[2].find('div', id='wrapper-container')
-        # article_links = divs2.find_all('a')
         article_links = []
         divs = soup1.find_all('div', class_='list_discription')
         for div in divs:
