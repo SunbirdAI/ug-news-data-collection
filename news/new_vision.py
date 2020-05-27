@@ -53,6 +53,5 @@ class NewVision(News):
                 all_articles.append(
                     {'slug': slug, 'text': cleaned_article}
                 )
-                all_articles.append({'slug': slug, 'text': paragraphs})
 
         return all_articles
