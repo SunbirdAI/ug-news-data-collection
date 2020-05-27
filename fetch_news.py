@@ -10,7 +10,11 @@ from news.daily_monitor import DailyMonitor
 new_vision = NewVision()
 daily_monitor = DailyMonitor()
 
-print(new_vision.fetch_news())
-print(daily_monitor.fetch_news())
+# nv_news = new_vision.fetch_news()
+dm_news = daily_monitor.fetch_news()
 
-# news_col.insert_many(nv_news_data)
+# print(nv_news)
+print(dm_news)
+
+# news_col.insert_many(nv_news)
+# news_col.insert_many(dm_news)

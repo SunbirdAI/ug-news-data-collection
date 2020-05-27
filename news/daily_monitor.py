@@ -11,8 +11,6 @@ class DailyMonitor(News):
         super().__init__(url, article_href)
 
     def clean_article_text(self, paragraphs):
-        # del paragraphs[0:2]
-        # del paragraphs[-7:]
         cleaned_text = []
         for p in paragraphs:
             p_text = p.get_text().strip()
@@ -33,20 +31,22 @@ class DailyMonitor(News):
         national_news = requests.get(self.url + national_news_page['href'])
         national_news_content = national_news.content
         soup2 = BeautifulSoup(national_news_content, 'html5lib')
-        article_links = soup2.find_all('a')
+        section = soup2.find('section', class_='main-home')
+        article_links = section.find_all('a')
 
         # Follow each link and fetch the article content
-
         all_articles = []
 
         for link in article_links:
-            article = requests.get(self.url + link['href'])
-            article_content = article.content
-            soup2 = BeautifulSoup(article_content, 'html5lib')
-            title = soup2.find('h1').get_text()
-            slug = "-".join(title.split())
-            paragraphs = soup2.find_all('p', recursive=True)
-            cleaned_article = self.clean_article_text(paragraphs)
-            all_articles.append({'slug': slug, 'text': cleaned_article})
+            if "National" in link['href']:
+                print(link)
+                article = requests.get(self.url + link['href'])
+                article_content = article.content
+                soup2 = BeautifulSoup(article_content, 'html5lib')
+                title = soup2.find('h1').get_text()
+                slug = "-".join(title.split())
+                paragraphs = soup2.find_all('p', recursive=True)
+                cleaned_article = self.clean_article_text(paragraphs)
+                all_articles.append({'slug': slug, 'text': cleaned_article})
 
         return all_articles
