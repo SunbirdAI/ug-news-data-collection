@@ -10,15 +10,6 @@ class NewVision(News):
         article_href = "https://www.newvision.co.ug/new_vision/news/"
         super().__init__(url, article_href)
 
-    def clean_article_text(self, paragraphs):
-        # del paragraphs[0:2]
-        # del paragraphs[-7:]
-        cleaned_text = []
-        for p in paragraphs:
-            p_text = p.get_text().strip()
-            cleaned_text.append(p_text)
-        return " ".join(cleaned_text)
-
     def fetch_news(self):
         """Fetch data from the New Vision online newspaper"""
 
@@ -28,9 +19,6 @@ class NewVision(News):
         soup1 = BeautifulSoup(coverpage, 'html5lib')
 
         # Pick out the divs that hold links to news articles
-        # divs1 = soup1.find_all('div')
-        # divs2 = divs1[2].find('div', id='wrapper-container')
-        # article_links = divs2.find_all('a')
         article_links = []
         divs = soup1.find_all('div', class_='list_discription')
         for div in divs:
