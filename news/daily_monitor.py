@@ -7,8 +7,7 @@ from news.news import News
 class DailyMonitor(News):
     def __init__(self):
         url = "https://www.monitor.co.ug"
-        article_href = re.compile(url)
-        super().__init__(url, article_href)
+        super().__init__(url)
 
     def fetch_news(self):
         """Fetch data from the Daily Monitor online newspaper"""
