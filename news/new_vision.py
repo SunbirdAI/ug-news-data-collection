@@ -10,13 +10,6 @@ class NewVision(News):
         article_href = "https://www.newvision.co.ug/new_vision/news/"
         super().__init__(url, article_href)
 
-    def clean_article_text(self, paragraphs):
-        cleaned_text = []
-        for p in paragraphs:
-            p_text = p.get_text().strip()
-            cleaned_text.append(p_text)
-        return " ".join(cleaned_text)
-
     def fetch_news(self):
         """Fetch data from the New Vision online newspaper"""
 

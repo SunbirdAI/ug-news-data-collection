@@ -10,13 +10,6 @@ class DailyMonitor(News):
         article_href = re.compile(url)
         super().__init__(url, article_href)
 
-    def clean_article_text(self, paragraphs):
-        cleaned_text = []
-        for p in paragraphs:
-            p_text = p.get_text().strip()
-            cleaned_text.append(p_text)
-        return " ".join(cleaned_text)
-
     def fetch_news(self):
         """Fetch data from the Daily Monitor online newspaper"""
 
