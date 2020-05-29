@@ -1,7 +1,7 @@
-from news.new_vision import NewVision
-from news.daily_monitor import DailyMonitor
-from news.observer import Observer
 import pymongo
+from news import (
+    NewVision, DailyMonitor, Observer
+)
 
 # Prepare the database client
 client = pymongo.MongoClient()

@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from news.news import News
+from .news import News
 
 
 class DailyMonitor(News):
@@ -33,9 +33,10 @@ class DailyMonitor(News):
             if self.url not in link:
                 link = self.url + link
             article = requests.get(link)
-            article_content = article.content
-            soup2 = BeautifulSoup(article_content, 'html5lib')
-            title = soup2.find('h2').get_text()
+            soup2 = BeautifulSoup(article.content, 'html5lib')
+            title = soup2.find('h2')
+            if title:
+                title = title.get_text()
             slug = "-".join(title.split())
             paragraphs = soup2.find_all('p', recursive=True)
             cleaned_article = self.clean_article_text(paragraphs)

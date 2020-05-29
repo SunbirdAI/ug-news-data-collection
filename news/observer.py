@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from news.news import News
+from .news import News
 
 
 class Observer(News):
@@ -26,12 +26,10 @@ class Observer(News):
         for link in article_links:
             link = self.url + link
             article = requests.get(link)
-            article_content = article.content
-            soup2 = BeautifulSoup(article_content, 'html5lib')
+            soup2 = BeautifulSoup(article.content, 'html5lib')
             soup3 = soup2.find('article', class_='item-page')
             if soup3:
                 title = soup3.find('h1').get_text()
-                print(title)
                 slug = "-".join(title.split())
                 paragraphs = soup3.find_all('p', recursive=True)
                 cleaned_article = self.clean_article_text(paragraphs)
