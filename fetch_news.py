@@ -1,3 +1,4 @@
+import logging
 import pymongo
 from news import (
     NewVision, DailyMonitor, Observer
@@ -22,7 +23,17 @@ print(nv_news)
 print(dm_news)
 print(ob_news)
 
+# Set up logger in case of database insertion errors
+logging.basicConfig(filename='example.log', level=logging.ERROR)
+
 # Insert into MongoDB database
-news_col.insert_many(nv_news)
-news_col.insert_many(dm_news)
-news_col.insert_many(ob_news)
+try:
+    news_col.insert_many(nv_news)
+    news_col.insert_many(dm_news)
+    news_col.insert_many(ob_news)
+except pymongo.bulk.BulkWriteError as bwe:
+    for err in bwe.details['writeErrors']:
+        if int(err['code']) == 11000:
+            pass
+        else:
+            logging.error(err['errmsg'])
