@@ -16,7 +16,25 @@ class Observer(News):
         headlines_page = news_request.content
         soup1 = BeautifulSoup(headlines_page, 'html5lib')
 
-        div = soup1.find('div', class_='nspMain')
-        article_links = div.find_all('a')
-        print(article_links)
-        print(len(article_links))
+        div = soup1.find('div', id='nsp-newslist')
+        article_links = [a['href'] for a in div.find_all('a')]
+        article_links = list(set(article_links))
+
+        # Follow each link and fetch the article content
+        all_articles = []
+
+        for link in article_links:
+            link = self.url + link
+            article = requests.get(link)
+            article_content = article.content
+            soup2 = BeautifulSoup(article_content, 'html5lib')
+            soup3 = soup2.find('article', class_='item-page')
+            if soup3:
+                title = soup3.find('h1').get_text()
+                print(title)
+                slug = "-".join(title.split())
+                paragraphs = soup3.find_all('p', recursive=True)
+                cleaned_article = self.clean_article_text(paragraphs)
+                all_articles.append({'slug': slug, 'text': cleaned_article})
+
+        return all_articles
