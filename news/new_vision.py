@@ -7,8 +7,7 @@ class NewVision(News):
 
     def __init__(self):
         url = "https://www.newvision.co.ug"
-        article_href = "https://www.newvision.co.ug/new_vision/news/"
-        super().__init__(url, article_href)
+        super().__init__(url)
 
     def fetch_news(self):
         """Fetch data from the New Vision online newspaper"""

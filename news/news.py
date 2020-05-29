@@ -1,7 +1,6 @@
 class News:
-    def __init__(self, url, article_href):
+    def __init__(self, url):
         self.url = url
-        self.article_href = article_href
 
     def clean_article_text(self, paragraphs):
         cleaned_text = []
