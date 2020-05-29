@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from news.news import News
+from .news import News
 
 
 class NewVision(News):
@@ -28,8 +28,7 @@ class NewVision(News):
 
         for link in article_links:
             article = requests.get(self.url + link)
-            article_content = article.content
-            soup2 = BeautifulSoup(article_content, 'html5lib')
+            soup2 = BeautifulSoup(article.content, 'html5lib')
             soup3 = soup2.find('div', class_='container_left')
             if soup3:
                 title = soup3.find('h1').get_text()
