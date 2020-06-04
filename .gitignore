@@ -39,3 +39,6 @@ ENV/
 
 # Local History for Visual Studio Code
 .history/
+
+# Log files
+*.log
