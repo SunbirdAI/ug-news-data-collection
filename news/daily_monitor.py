@@ -15,16 +15,21 @@ class DailyMonitor(News):
         news_request = requests.get(self.url)
         coverpage = news_request.content
         soup1 = BeautifulSoup(coverpage, 'html5lib')
-        national_news_page = soup1.nav.find_all('a')[10]
+        links_div = soup1.nav.find('div', class_='col-3')
+        national_news_href = '/uganda/news/national'
+        national_news_page = links_div.find_all(
+            'a', href=national_news_href
+        )
 
         # Follow the national news link and pick out
         # links to individual articles
-        national_news = requests.get(self.url + national_news_page['href'])
+        national_news = requests.get(self.url + national_news_page[0]['href'])
         national_news_content = national_news.content
         soup2 = BeautifulSoup(national_news_content, 'html5lib')
-        section = soup2.find('section', class_='comment-section')
-        article_links = [a['href'] for a in section.find_all('a')]
+        column = soup2.find('div', class_='main column')
+        article_links = [a['href'] for a in column.find_all('a')]
         article_links = list(set(article_links))
+        article_links.remove(national_news_href)
 
         # Follow each link and fetch the article content
         all_articles = []

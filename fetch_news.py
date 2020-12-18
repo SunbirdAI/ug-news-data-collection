@@ -20,9 +20,14 @@ dm_news = daily_monitor.fetch_news()
 ob_news = observer.fetch_news()
 
 # Print - temporary for testing
-print(len(nv_news), len(dm_news), len(ob_news))
-print(dm_news)
-print(ob_news)
+print(
+    f'''
+    Number of news articles scraped:
+    New Vision: {len(nv_news)}
+    Daily Monitor: {len(dm_news)},
+    Observer: {len(ob_news)}
+    '''
+)
 
 # Set up logger in case of database insertion errors
 logging.basicConfig(filename='fetch_news.log', level=logging.ERROR)
