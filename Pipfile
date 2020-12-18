@@ -11,6 +11,7 @@ requests = "*"
 beautifulsoup4 = "*"
 html5lib = "*"
 pymongo = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.6"

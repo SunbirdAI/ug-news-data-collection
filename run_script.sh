@@ -1,0 +1,1 @@
+pipenv run python fetch_news.py

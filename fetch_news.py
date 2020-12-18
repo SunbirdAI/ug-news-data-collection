@@ -1,3 +1,4 @@
+import os
 import logging
 import pymongo
 from news import (
@@ -6,9 +7,9 @@ from news import (
 
 # Prepare the database client
 client = pymongo.MongoClient()
-news_db = client["ug_news"]
-news_col = news_db["news"]
-news_db.news.create_index([('slug', pymongo.ASCENDING)], unique=True)
+news_db = client[os.environ['DB_NAME']]
+news_col = news_db[os.environ['DB_COLLECTION']]
+news_col.create_index([('slug', pymongo.ASCENDING)], unique=True)
 
 new_vision = NewVision()
 daily_monitor = DailyMonitor()
@@ -18,13 +19,18 @@ nv_news = new_vision.fetch_news()
 dm_news = daily_monitor.fetch_news()
 ob_news = observer.fetch_news()
 
-# Print - temporary
-print(nv_news)
-print(dm_news)
-print(ob_news)
+# Print - temporary for testing
+print(
+    f'''
+    Number of news articles scraped:
+    New Vision: {len(nv_news)}
+    Daily Monitor: {len(dm_news)},
+    Observer: {len(ob_news)}
+    '''
+)
 
 # Set up logger in case of database insertion errors
-logging.basicConfig(filename='example.log', level=logging.ERROR)
+logging.basicConfig(filename='fetch_news.log', level=logging.ERROR)
 
 # Insert into MongoDB database
 try:
